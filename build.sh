@@ -70,7 +70,7 @@ if [ $build32 -eq 1 ]; then
     cd ..
   fi
   cd build32L
-  cmake --build .
+  cmake --build . --target VanessaExt -- -j 3
   cd ..
 fi    
 
@@ -87,7 +87,7 @@ if [ $build64 -eq 1 ]; then
     cd ..
   fi ;
   cd build64L
-  cmake --build .
+  cmake --build . --target VanessaExt -- -j 3
   cd ..
 fi    
 
