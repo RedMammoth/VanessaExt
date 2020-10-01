@@ -37,7 +37,12 @@ add_library(${TARGET} SHARED
 	src/version.h
 	src/json.hpp
 	src/stdafx.h
+	src/glibc_hook.h
 )
+
+target_link_libraries(${PROJECT_NAME}
+		-Wl,--wrap=pow
+		)
 
 target_compile_definitions(${TARGET} PRIVATE UNICODE _UNICODE)
 target_include_directories(${TARGET} PRIVATE include)
@@ -78,20 +83,10 @@ if (UNIX)
 	FIND_PACKAGE(X11 COMPONENTS Xtst)
 	target_link_libraries(${PROJECT_NAME} ${X11_XTest_LIB})
 
-	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-	target_link_libraries(${PROJECT_NAME} -static-libgcc -static-libstdc++)
-	target_link_libraries(${PROJECT_NAME} m)
-
-	set(HAVE_OFF64_T OFF CACHE BOOL  "Build libpng tests" FORCE)
-	add_subdirectory(zlib-1.2.11)
-	target_link_libraries(${PROJECT_NAME} zlibstatic)
-
-	set(PNG_BUILD_ZLIB ${LIBRARY_OUTPUT_PATH} CACHE PATH "zlib build dir" FORCE)
-	set(PNG_SHARED OFF CACHE BOOL "Build shared lib" FORCE)
-	set(PNG_STATIC ON CACHE BOOL "Build static lib" FORCE)
-	set(PNG_TESTS OFF CACHE BOOL  "Build libpng tests" FORCE)
-	add_subdirectory(libpng-1.6.37)
-	target_link_libraries(${PROJECT_NAME} png_static)
+	add_subdirectory(libpng-1.5.13)
+	target_include_directories(${TARGET} PRIVATE libpng-1.5.13)
+	target_link_libraries(${PROJECT_NAME} png15)
+	target_link_libraries(${PROJECT_NAME} -static-libstdc++)
 
 else(UNIX)
 	add_definitions(/MT)

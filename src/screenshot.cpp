@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <png.h>
+#include "png.h"
 #include <stdexcept>
 #include "screenshot.h"
 

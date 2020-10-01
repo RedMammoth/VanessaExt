@@ -2,7 +2,7 @@
 
 ############################################################################
 
-PNG_VERSION=libpng-1.6.37
+PNG_VERSION=libpng-1.5.13
 if [ ! -d "./$PNG_VERSION" ]; then
   if [ ! -f "./$PNG_VERSION.tar.gz" ]; then
     wget "https://download.sourceforge.net/libpng/$PNG_VERSION.tar.gz"
